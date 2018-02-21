@@ -31,6 +31,15 @@ type KeystoneAuthorizer struct {
 	pl      PolicyList
 }
 
+// NewAuthorizer returns a new  authorizer
+func NewAuthorizer(authURL string, client *gophercloud.ServiceClient, pl PolicyList) authorizer.Authorizer {
+	return &KeystoneAuthorizer{
+		authURL: authURL,
+		client:  client,
+		pl:      pl,
+	}
+}
+
 func resourceMatches(p Policy, a authorizer.Attributes) bool {
 	if p.NonResourceSpec != nil && p.ResourceSpec != nil {
 		glog.Infof("Policy has both resource and nonresource sections. skipping : %#v", p)
